@@ -4,7 +4,6 @@ import sharp from 'sharp';
 
 const images = express.Router();
 
-images.use(express.static(path.join(__dirname, './../../../public')));
 
 images.get('/', (req, res) => {
   if (!req.query.filename && !req.query.width && !req.query.height)
@@ -22,15 +21,18 @@ images.get('/', (req, res) => {
 
   if (req.query.filename && req.query.width && req.query.height) {
     try {
-      const intWidth = parseInt(req.query.width as string);
-      const intheight = parseInt(req.query.height as string);
+      if (!parseInt(req.query.width as string))
+        return res
+        .status(400)
+        .send('Bad Request: Please, enter a valid width');
 
-      if (typeof intWidth != 'number')
-        return res.status(400).send('Bad Request: Please, enter a valid width');
-      if (typeof intheight != 'number')
+      if (!parseInt(req.query.height as string))
         return res
           .status(400)
           .send('Bad Request: Please, enter a valid height');
+
+      const intWidth = parseInt(req.query.width as string);
+      const intheight = parseInt(req.query.height as string);
 
       sharp(
         path.join(
@@ -61,5 +63,7 @@ images.get('/', (req, res) => {
     }
   } else return res.status(200).send('Images API endpoint returned');
 });
+
+images.use(express.static(path.join(__dirname, './../../../public')));
 
 export default images;
