@@ -1,11 +1,12 @@
 import express from 'express';
+import { request } from 'http';
 import path from 'path';
-import sharp from 'sharp';
+import doImageProcessing from './services/imageProcessingService';
 
 const images = express.Router();
 
 
-images.get('/', (req, res) => {
+images.get('/', (req: express.Request, res: express.Response): express.Response => {
   if (!req.query.filename && !req.query.width && !req.query.height)
     return res.status(200).send('Images API endpoint');
 
@@ -32,36 +33,21 @@ images.get('/', (req, res) => {
           .send('Bad Request: Please, enter a valid height');
 
       const intWidth = parseInt(req.query.width as string);
-      const intheight = parseInt(req.query.height as string);
+      const intHeight = parseInt(req.query.height as string);
 
-      sharp(
-        path.join(
-          __dirname,
-          `./../../../public/images/${req.query.filename}.png`
-        )
-      )
-        .resize(intWidth, intheight)
-        .png()
-        .toFile(
-          path.join(
-            __dirname,
-            `./../../../public/resized-images/${req.query.filename}-${req.query.width}-${req.query.height}.png`
-          )
-        )
-        .then(() => {
-          res.send(
-            `<img src=./resized-images/${req.query.filename}-${req.query.width}-${req.query.height}.png />`
-          );
-        })
-        .catch((err) => {
-          console.log({ error: err });
-          return res.status(500).send({ error: err.message });
-        });
+      doImageProcessing(req.query.filename as string, intWidth, intHeight)
+      .then(result =>{
+        const img = `<img src=./../../../resized-images/${result}.png />`;
+        res.status(200).send(img)
+      })
+      .catch(err => res.status(500).send({Error: err}));
+
+      return res;
+
     } catch (error) {
-      console.log('ERROR: ', error);
       return res.status(400).send(error);
     }
-  } else return res.status(200).send('Images API endpoint returned');
+  } return res.status(200).send('Images API endpoint returned');
 });
 
 images.use(express.static(path.join(__dirname, './../../../public')));

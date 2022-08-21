@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, './../public/')));
 
 app.use('/api', routes);
 
-app.get('/', (req, res) => {
+app.get('/', (req: express.Request, res: express.Response): express.Response  => {
   return res.send(`<img src="./images/fjord.png" alt="${__dirname}" />`);
 });
 

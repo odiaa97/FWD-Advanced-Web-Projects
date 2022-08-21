@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const sharp_1 = __importDefault(require("sharp"));
+const imageProcessingService_1 = __importDefault(require("./services/imageProcessingService"));
 const images = express_1.default.Router();
 images.get('/', (req, res) => {
     if (!req.query.filename && !req.query.width && !req.query.height)
@@ -29,26 +29,20 @@ images.get('/', (req, res) => {
                     .status(400)
                     .send('Bad Request: Please, enter a valid height');
             const intWidth = parseInt(req.query.width);
-            const intheight = parseInt(req.query.height);
-            (0, sharp_1.default)(path_1.default.join(__dirname, `./../../../public/images/${req.query.filename}.png`))
-                .resize(intWidth, intheight)
-                .png()
-                .toFile(path_1.default.join(__dirname, `./../../../public/resized-images/${req.query.filename}-${req.query.width}-${req.query.height}.png`))
-                .then(() => {
-                res.send(`<img src=./resized-images/${req.query.filename}-${req.query.width}-${req.query.height}.png />`);
+            const intHeight = parseInt(req.query.height);
+            (0, imageProcessingService_1.default)(req.query.filename, intWidth, intHeight)
+                .then(result => {
+                const img = `<img src=./../../../resized-images/${result}.png />`;
+                res.status(200).send(img);
             })
-                .catch((err) => {
-                console.log({ error: err });
-                return res.status(500).send({ error: err.message });
-            });
+                .catch(err => res.status(500).send({ Error: err }));
+            return res;
         }
         catch (error) {
-            console.log('ERROR: ', error);
             return res.status(400).send(error);
         }
     }
-    else
-        return res.status(200).send('Images API endpoint returned');
+    return res.status(200).send('Images API endpoint returned');
 });
 images.use(express_1.default.static(path_1.default.join(__dirname, './../../../public')));
 exports.default = images;
