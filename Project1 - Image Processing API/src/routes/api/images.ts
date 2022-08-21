@@ -1,23 +1,9 @@
 import express from 'express';
 import path from 'path';
 import doImageProcessing from './services/imageProcessingService';
-import fs from 'fs'
+import fs from 'fs';
 
 const images = express.Router();
-
-const isImage = (url: string): boolean => {
-  const img = new Image();
-  try{
-    img.src = url;
-    return true;
-  }
-  catch(err){
-    console.log("im in something inbetween")
-    return false;
-  }
-  
-  
-}
 
 images.get(
   '/',
@@ -27,20 +13,23 @@ images.get(
 
     if (!req.query.filename && (req.query.width || req.query.height))
       return res
-        .status(400)
-        .send({ message: 'Bad Requst: Please enter a filename' });
-
-    if (req.query.filename && (!req.query.width || !req.query.height))
-    {
-      const src = `${path.join(__dirname, `./../../../public/images/${req.query.filename}.png`)}`;
-      if(fs.existsSync(src))
-        return res
         .status(200)
-        .send(`<img src=./images/${req.query.filename}.png />`);
-      else return res.status(400).send({ message: 'Bad Request, Please enter a valid filename' }); 
-    }       
-    
-      
+        .send({ message: 'Please enter a filename' });
+
+    if (req.query.filename && (!req.query.width || !req.query.height)) {
+      const src = `${path.join(
+        __dirname,
+        `./../../../public/images/${req.query.filename}.png`
+      )}`;
+      if (fs.existsSync(src))
+        return res
+          .status(200)
+          .send(`<img src=./images/${req.query.filename}.png />`);
+      else
+        return res
+          .status(200)
+          .send({ message: 'Please enter a valid filename' });
+    }
 
     if (req.query.filename && req.query.width && req.query.height) {
       try {

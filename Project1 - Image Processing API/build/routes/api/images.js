@@ -6,18 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const imageProcessingService_1 = __importDefault(require("./services/imageProcessingService"));
+const fs_1 = __importDefault(require("fs"));
 const images = express_1.default.Router();
 images.get('/', (req, res) => {
     if (!req.query.filename && !req.query.width && !req.query.height)
         return res.status(200).send('Images API endpoint');
     if (!req.query.filename && (req.query.width || req.query.height))
         return res
-            .status(400)
-            .send({ message: 'Bad Requst: Please enter a filename' });
-    if (req.query.filename && (!req.query.width || !req.query.height))
-        return res
             .status(200)
-            .send(`<img src=./images/${req.query.filename}.png />`);
+            .send({ message: 'Please enter a filename' });
+    if (req.query.filename && (!req.query.width || !req.query.height)) {
+        const src = `${path_1.default.join(__dirname, `./../../../public/images/${req.query.filename}.png`)}`;
+        if (fs_1.default.existsSync(src))
+            return res
+                .status(200)
+                .send(`<img src=./images/${req.query.filename}.png />`);
+        else
+            return res
+                .status(200)
+                .send({ message: 'Please enter a valid filename' });
+    }
     if (req.query.filename && req.query.width && req.query.height) {
         try {
             if (!parseInt(req.query.width))
@@ -31,11 +39,11 @@ images.get('/', (req, res) => {
             const intWidth = parseInt(req.query.width);
             const intHeight = parseInt(req.query.height);
             (0, imageProcessingService_1.default)(req.query.filename, intWidth, intHeight)
-                .then(result => {
+                .then((result) => {
                 const img = `<img src=./../../../resized-images/${result}.png />`;
                 res.status(200).send(img);
             })
-                .catch(err => res.status(500).send({ Error: err }));
+                .catch((err) => res.status(500).send({ Error: err }));
             return res;
         }
         catch (error) {

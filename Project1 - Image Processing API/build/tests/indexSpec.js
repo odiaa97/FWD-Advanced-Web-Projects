@@ -17,19 +17,21 @@ const supertest_1 = __importDefault(require("supertest"));
 const imageProcessingService_1 = __importDefault(require("../routes/api/services/imageProcessingService"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('given a filename, width and height to doImgProcessing function', () => {
-    it('Should return a promise', () => {
-        return (0, imageProcessingService_1.default)("fjord", 300, 300).then(result => {
-            expect(result).toEqual("fjord-300-300");
+    it('Should return a promise with the filename-width-height', () => {
+        return (0, imageProcessingService_1.default)('fjord', 300, 300)
+            .then((result) => {
+            expect(result).toEqual('fjord-300-300');
         })
-            .catch(err => {
+            .catch((err) => {
             expect(err).toEqual(err);
         });
     });
     it('Should return a promise error no file found', () => {
-        return (0, imageProcessingService_1.default)("ford", 300, 300).then(result => {
-            expect(result).toEqual("fjord-300-300");
+        return (0, imageProcessingService_1.default)('ford', 300, 300)
+            .then((result) => {
+            expect(result).toEqual('fjord-300-300');
         })
-            .catch(err => {
+            .catch((err) => {
             expect(err).toEqual(err);
         });
     });
