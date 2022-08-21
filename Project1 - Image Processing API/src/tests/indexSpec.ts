@@ -1,28 +1,29 @@
 import app from '../index';
 import supertest from 'supertest';
-import doImgProcessing
- from '../routes/api/services/imageProcessingService';
+import doImgProcessing from '../routes/api/services/imageProcessingService';
 const request = supertest(app);
 
 describe('given a filename, width and height to doImgProcessing function', () => {
-  it('Should return a promise with the filename-width-height', () =>{
-    return doImgProcessing("fjord", 300, 300).then(result =>{
-      expect(result).toEqual("fjord-300-300");
-    })
-    .catch(err => {
-      expect(err).toEqual(err);
-    });
-  })
+  it('Should return a promise with the filename-width-height', () => {
+    return doImgProcessing('fjord', 300, 300)
+      .then((result) => {
+        expect(result).toEqual('fjord-300-300');
+      })
+      .catch((err) => {
+        expect(err).toEqual(err);
+      });
+  });
 
-  it('Should return a promise error no file found', () =>{
-    return doImgProcessing("ford", 300, 300).then(result =>{
-      expect(result).toEqual("fjord-300-300");
-    })
-    .catch(err => {
-      expect(err).toEqual(err);
-    });
-  })
-})
+  it('Should return a promise error no file found', () => {
+    return doImgProcessing('ford', 300, 300)
+      .then((result) => {
+        expect(result).toEqual('fjord-300-300');
+      })
+      .catch((err) => {
+        expect(err).toEqual(err);
+      });
+  });
+});
 
 describe('given a request parameter', () => {
   it('Should response with 200 OK', async () => {
