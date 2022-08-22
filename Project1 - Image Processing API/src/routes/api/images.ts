@@ -49,7 +49,10 @@ images.get(
             const img = `<img src=./../../../resized-images/${result}.png />`;
             res.status(200).send(img);
           })
-          .catch((err) => res.status(500).send({ Error: err }));
+          .catch((err) => {
+            console.log(err);
+            res.status(500).send({ Error: err });
+          });
 
         return res;
       } catch (error) {
