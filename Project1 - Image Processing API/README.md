@@ -39,7 +39,7 @@
 ## changes to tsconfig.json:
 - "target": "es2016",
 - "lib": ["DOM", "ES6"],
-- "outDir": "./JSBuild",
+- "outDir": "./build",
 - "noImplicitAny": true
 - "exclude": ["node_modules", "./JSBuild", "spec"]
 
