@@ -14,10 +14,10 @@
 - npm i --save-dev eslint
 - npm i --save-dev prettier eslint-plugin-prettier
 - npm i --save-dev nodemon 
-- npm i supertest
+- npm i --save-dev supertest
+- npm i --save-dev jasmine
+- npm i --save-dev  jasmine-spec-reporter
 - npm i express
-- npm i jasmine
-- npm i jasmine-spec-reporter
 - npm i sharp
 
 - npm i --save-dev @types/supertest
