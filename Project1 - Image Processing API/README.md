@@ -77,4 +77,7 @@
 ### Format the whole src folder typescript files [prettier]: `npm run prettier`
 ### Build the project: `npm run build`
 ### Run the tests: `npm run test`
-### Run the project: `npm run start`
+### Run the project: `npm run start`: `Server listening on http://localhost:3000`
+
+### You can access the images API from : `http://localhost:3000/api/images`
+### You can test an image Processing given the image name, width and height as a query parameters from: `http://localhost:3000/api/images?filename=image1&width=300&height=300`

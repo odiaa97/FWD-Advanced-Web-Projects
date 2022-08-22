@@ -29,10 +29,10 @@ describe('given a filename, width and height to doImgProcessing function', () =>
     it('Should return a promise error no file found', () => {
         return (0, imageProcessingService_1.default)('ford', 300, 300)
             .then((result) => {
-            expect(result).toEqual('fjord-300-300');
+            expect(result).toEqual('ford-300-300');
         })
             .catch((err) => {
-            expect(err).toEqual(err);
+            expect(err).toEqual('Error: Input file is missing: D:\\Learning\\Udacity FWD Advanced Web\\Projects\\Project1 - Image Processing API\\public\\images\\ford.png');
         });
     });
 });

@@ -12,9 +12,7 @@ images.get(
       return res.status(200).send('Images API endpoint');
 
     if (!req.query.filename && (req.query.width || req.query.height))
-      return res
-        .status(200)
-        .send({ message: 'Please enter a filename' });
+      return res.status(200).send({ message: 'Please enter a filename' });
 
     if (req.query.filename && (!req.query.width || !req.query.height)) {
       const src = `${path.join(
