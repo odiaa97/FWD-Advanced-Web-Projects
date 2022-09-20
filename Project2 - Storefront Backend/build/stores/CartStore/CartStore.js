@@ -93,14 +93,14 @@ class CartStore {
                 throw new Error(`Cannot create order: ${err}`);
             }
         });
-        this.changeProductQty = (orderProductId, sign) => __awaiter(this, void 0, void 0, function* () {
+        this.changeProductQty = (orderProduct, sign) => __awaiter(this, void 0, void 0, function* () {
             try {
                 // get old product
-                const orderProduct = yield this.getOrderProduct(orderProductId);
+                const oldOrderProduct = yield this.getOrderProduct(orderProduct.id || 0);
                 // Calculate new product quantity based on [sign] parameter if true: increment, false: decrement
                 const newQuantity = sign ? (orderProduct.quantity + 1) : (orderProduct.quantity - 1);
                 // Update product quantity
-                const sql = `UPDATE order_products SET quantity = ${newQuantity} WHERE id = ${orderProductId} RETURNING *;`;
+                const sql = `UPDATE order_products SET quantity = ${newQuantity} WHERE id = ${oldOrderProduct.id} RETURNING *;`;
                 const conn = yield db_config_1.default.connect();
                 const result = yield conn.query(sql);
                 // Return

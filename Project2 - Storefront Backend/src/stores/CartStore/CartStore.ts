@@ -56,7 +56,7 @@ export class CartStore {
         }
     }
 
-    addProductInCart = async (order_product: Order_Product): Promise<Product> => {
+    addProductInCart = async (order_product: Order_Product): Promise<Order_Product> => {
         try {
             // Validations are in controller
             const sql = 'INSERT INTO order_products (order_id, product_id, quantity) VALUES($1, $2, $3) RETURNING *'
@@ -87,16 +87,16 @@ export class CartStore {
         }
     };
 
-    changeProductQty = async (orderProductId: number, sign: boolean) => {
+    changeProductQty = async (orderProduct: Order_Product, sign: boolean) => {
         try {
             // get old product
-            const orderProduct = await this.getOrderProduct(orderProductId);
+            const oldOrderProduct = await this.getOrderProduct(orderProduct.id || 0);
 
             // Calculate new product quantity based on [sign] parameter if true: increment, false: decrement
             const newQuantity = sign ? (orderProduct.quantity + 1) : (orderProduct.quantity - 1);
 
             // Update product quantity
-            const sql = `UPDATE order_products SET quantity = ${newQuantity} WHERE id = ${orderProductId} RETURNING *;`
+            const sql = `UPDATE order_products SET quantity = ${newQuantity} WHERE id = ${oldOrderProduct.id} RETURNING *;`
             const conn = await client.connect();
             const result = await conn.query(sql);
 
