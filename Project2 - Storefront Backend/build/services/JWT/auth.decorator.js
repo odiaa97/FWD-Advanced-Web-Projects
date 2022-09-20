@@ -1,35 +1,47 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+'use strict';
+var __decorate =
+  (this && this.__decorate) ||
+  function (decorators, target, key, desc) {
+    var c = arguments.length,
+      r =
+        c < 3
+          ? target
+          : desc === null
+          ? (desc = Object.getOwnPropertyDescriptor(target, key))
+          : desc,
+      d;
+    if (typeof Reflect === 'object' && typeof Reflect.decorate === 'function')
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if ((d = decorators[i]))
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+  };
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.MyDecorator = void 0;
 function MyDecorator() {
-    console.log("first(): factory evaluated");
-    return function (target, propertyKey) {
-        console.log(`first(): called -- ${target} --- ${propertyKey}`);
-    };
+  console.log('first(): factory evaluated');
+  return function (target, propertyKey) {
+    console.log(`first(): called -- ${target} --- ${propertyKey}`);
+  };
 }
 exports.MyDecorator = MyDecorator;
 function test(target, propertyKey, descriptor) {
-    return descriptor;
+  return descriptor;
 }
 class Test {
-    hello() {
-    }
+  hello() {}
 }
-__decorate([
-    test
-], Test.prototype, "hello", null);
+__decorate([test], Test.prototype, 'hello', null);
 function decorator(target, propertyKey, descriptor) {
-    const originalMethod = descriptor.value; // then we overwrite it with a new implementation,
-    console.log("first(): factory evaluated");
-    return function (target, propertyKey, descriptor) {
-        console.log(`first(): called -- ${target} --- ${propertyKey} --- ${descriptor}`);
-    };
+  const originalMethod = descriptor.value; // then we overwrite it with a new implementation,
+  console.log('first(): factory evaluated');
+  return function (target, propertyKey, descriptor) {
+    console.log(
+      `first(): called -- ${target} --- ${propertyKey} --- ${descriptor}`
+    );
+  };
 }
 //export default MyDecorator;
 // import jwt from 'jsonwebtoken';

@@ -12,18 +12,18 @@ const app: express.Application = express();
 const port = 3000;
 const host = '127.0.0.1';
 app.listen(port, host, () => {
-    console.log(`listening on http://${host}:${port}`);
+  console.log(`listening on http://${host}:${port}`);
 });
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionSuccessStatus: 200
-}
+  origin: 'http://localhost:3000',
+  optionSuccessStatus: 200
+};
 app.use(cors(corsOptions));
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.get('/', (req: Request, res: Response) => {
-    res.send('Welcome to the home page!');
+  res.send('Welcome to the home page!');
 });
 
 userRoutes(app);

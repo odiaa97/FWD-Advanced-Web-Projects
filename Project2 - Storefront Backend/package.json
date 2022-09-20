@@ -11,8 +11,8 @@
     "jasmine-ts": "npm run build && npm run jasmine",
     "test": "set ENV=test&& db-migrate --env test down && db-migrate --env test up && npm run jasmine-ts && db-migrate --env test down",
     "test-down": "set ENV=test&& db-migrate --env test down",
-    "lint": "eslint --ext .js, .ts",
-    "lint:fix": "eslint --fix --ext .js, .ts",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"**/*.{ts,tsx}\"",
     "prettier": "prettier --ignore-path .prettier --config .prettierrc --write \"**/*.+(js|ts|json)\""
   },
   "keywords": [],

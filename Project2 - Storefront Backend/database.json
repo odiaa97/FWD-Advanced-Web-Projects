@@ -1,19 +1,16 @@
 {
-    "dev":
-    {
-      "driver": "pg",
-      "user": "postgres",
-      "password": "postgres",
-      "host": "localhost",
-      "database": "db"
-    },
-    "test":
-    {
-        "driver": "pg",
-        "user": "postgres",
-        "password": "postgres",
-        "host": "localhost",
-        "database": "db_test"
-    }
-
+  "dev": {
+    "driver": "pg",
+    "user": "postgres",
+    "password": "postgres",
+    "host": "localhost",
+    "database": "db"
+  },
+  "test": {
+    "driver": "pg",
+    "user": "postgres",
+    "password": "postgres",
+    "host": "localhost",
+    "database": "db_test"
+  }
 }
