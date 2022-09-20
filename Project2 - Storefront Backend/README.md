@@ -125,6 +125,4 @@ Install npm dependencies: `npm i`
 
 Run the project: `npm run start` >> `Server listening on http://localhost:3000`
 
-You can access the images API from : `http://localhost:3000/api/images`
-
-You can test image resizing given the image name, width and height as query parameters through: `http://localhost:3000/api/images?filename=image1&width=300&height=300`
+You can access APIs from : `http://localhost:3000/`
