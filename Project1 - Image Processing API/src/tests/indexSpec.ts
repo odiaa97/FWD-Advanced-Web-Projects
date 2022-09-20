@@ -14,6 +14,7 @@ describe('given a filename, width and height to doImgProcessing function', () =>
       });
   });
 
+
   it('Should return a promise error no file found', () => {
     return doImgProcessing('ford', 300, 300)
       .then((result) => {
